@@ -1,0 +1,64 @@
+<nav>
+    <a href="#">Inicio</a>
+    <a href="#">Proyectos</a>
+    <a href="#">Conocenos</a>
+    <a href="#">Trabajos</a>
+    <a href="#">Contacto</a>
+</nav>
+
+<style>
+	a {
+		margin: 2px 2%;
+		color: black;
+		text-decoration: none;
+	}
+
+	a:hover {
+		text-decoration: underline;
+		text-
+	}
+
+	nav {
+        padding: 8px 10px;
+		width: 100%;
+		display: flex;
+		position: fixed;
+		background-color: #fff;
+		justify-content: center;
+		animation: nav 1s ease-out;
+		backdrop-filter: blur(10px);
+		box-shadow: 0px 5px 10px 0px rgba(0,0,0,0);
+
+        /* Pause the animation */
+		animation-play-state: paused;
+		/* Bind the animation to scroll */
+		animation-delay: calc(var(--scroll) * -1s);
+		/* These last 2 properites clean up overshoot weirdness */
+		animation-iteration-count: 1;
+		animation-fill-mode: both;
+	}
+
+	@keyframes nav {
+		to {
+			width: 30%;
+			margin: 8px 35%;
+			border-radius: 8px;
+			background-color: #ffffffba;
+			box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.2);
+		}
+	}
+</style>
+
+<script>
+    const height = document.body.offsetHeight - window.innerHeight;
+
+	window.addEventListener('scroll', () => {
+        let scroll = document.documentElement.scrollTop;
+
+        console.log(scroll);
+
+		document.body.style.setProperty(
+			'--scroll', 
+			(scroll / (height > 150 ? 150:height)).toString());
+	}, false);
+</script>
