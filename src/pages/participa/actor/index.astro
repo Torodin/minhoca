@@ -1,0 +1,179 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+
+let messages = [];
+
+if(Astro.request.method === 'POST') {
+	const formData = await Astro.request.formData();
+	const name = formData.get('name');
+	const email = formData.get('email');
+	const phone = formData.get('phone');
+	const message = formData.get('message');
+	const videos = formData.getAll('video');
+
+	console.log(videos);
+
+	try {
+		await fetch(`${import.meta.env.URL}/.netlify/functions/emails/generalapli`,
+			{
+				headers: {
+					"netlify-emails-secret": import.meta.env.NETLIFY_EMAILS_SECRET,
+				},
+				method: "POST",
+				body: JSON.stringify({
+					from: "diegogomezledo@gmail.com",
+					to: "diegogomezledo@gmail.com",
+					subject: "Aplicacion general de " + name,
+					parameters: {
+						name: name, 
+						email: email, 
+						phone: phone, 
+						message: message
+					},
+					attachments: videos,
+				}),
+			}
+		);
+
+		messages.push("Gracias por aplicar, te contactaremos pronto.");
+	} catch (error) {
+		messages.push("Hubo un error al enviar tu aplicacion, intenta de nuevo.");
+	}
+}
+---
+
+<Layout title="Unete">
+	<main>
+		{messages.length > 0 && (
+			<div>
+				{messages.map((error) => (
+					<p>{error}</p>
+				))}
+			</div>
+		)}
+		<h2>Unete...</h2>
+		<form method="post" enctype="multipart/form-data">
+			<section class="line-inputs">
+				<label for="name">Nombre*</label>
+				<input type="text" id="name" name="name" >
+
+				<label for="email">Correo*</label>
+				<input type="email" id="email" name="email" >
+
+				<label for="phone">Numero de télefono*</label>
+				<input type="tel" id="phone" name="phone" >
+
+				<label for="video" class="custom-file-upload">Videos</label>
+				<input type="file" id="video" name="video" accept="video/*" multiple/>
+			</section>
+			<section class="message">
+				<label for="message">Sobre ti*</label>
+				<textarea name="message" id="message" required></textarea>
+				<input type="submit" value="Unirme →" />
+			</section>
+		</form>
+	</main>
+</Layout>
+
+<style>
+	main {
+		padding: 65px 5rem 0 5rem;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+
+	h2 {
+		margin-bottom: 2rem;
+	}
+
+	form {
+		display: flex;
+		flex-wrap: wrap;
+		background-color: #f1f1f1;
+		border-radius: 5px;
+		padding: 3rem 15%;
+	}
+
+	.line-inputs {
+		display: flex;
+		flex-direction: column;
+		margin-right: 5%;
+		flex: 1;
+	}
+
+	label {
+		font-size: 1rem;
+	}
+
+	.line-inputs input {
+		margin-bottom: 20px;
+		height: 30px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+	}
+
+	.message {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+	}
+
+	.message textarea {
+		margin-bottom: 20px;
+		min-height: 10rem;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		resize: none;
+	}
+
+	input[type='submit'] {
+		font-size: 1.2rem;
+		border: none;
+		border-bottom: black 2px solid;
+		align-self: flex-end;
+
+		background: linear-gradient(to bottom, #f1f1f1 50%, black 50%);
+		background-size: 100% 200%;
+		animation: backfillreverse .2s ease-in-out 0s forwards;
+	}
+
+	input[type='submit']:hover, .custom-file-upload:hover {
+		animation: backfill .15s ease-in-out	0s forwards;
+	}
+
+	@keyframes backfill {
+		0% {
+			background-position: top;
+		}
+		100% {
+			color: white;
+			background-position: bottom;
+		}
+	}
+
+	@keyframes backfillreverse {
+		0% {
+			background-position: bottom;
+		}
+		100% {
+			color: black;
+			background-position: top;
+		}
+	}
+
+	input[type="file"] {
+		display: none;
+	}
+
+	.custom-file-upload {
+		padding: 0px 6px;
+		font-size: 1.2rem;
+		border: none;
+		border-bottom: black 2px solid;
+		align-self: flex-start;
+
+		background: linear-gradient(to bottom, #f1f1f1 50%, black 50%);
+		background-size: 100% 200%;
+		animation: backfillreverse .2s ease-in-out 0s forwards;
+	}
+</style>

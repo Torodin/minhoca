@@ -1,0 +1,88 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Contáctanos">
+	<main>
+		<section>
+			<h2>Contáctanos</h2>
+			<p>Quieres hablar con nosotros para una colaboración o por otra razón?</p>
+		</section>
+
+		<ul>
+			<li>
+				<p>Envianos un correo a</p>
+				<p><a href="mailto:diegogomezledo@gmail.com">diegogomezledo@gmail.com</a></p>
+			</li>
+			<li>
+				<p>LLamanos al</p>
+				<p>xxx-xx-xx-xx</p>
+			</li>
+		</ul>
+	</main>
+</Layout>
+
+<style>
+	main {
+		padding: 65px 5rem 0 5rem;
+		max-height: calc(100vh - 65px);
+		font-size: 20px;
+		line-height: 1.6;
+		align-items: center;
+        justify-content: center;
+		display: flex;
+        flex-direction: column;
+	}
+
+	.title {
+		width: 100%;
+		margin-bottom: 5%;
+		animation: title-shrink 2s ease-out;
+
+		/* Pause the animation */
+		animation-play-state: paused;
+		/* Bind the animation to scroll */
+		animation-delay: calc(var(--scroll) * -1s);
+		/* These last 2 properites clean up overshoot weirdness */
+		animation-iteration-count: 1;
+		animation-fill-mode: both;
+	}
+	@keyframes title-shrink {
+		to {
+			font-size: 5rem;
+		}
+	}
+
+	section {
+		width: 100%;
+	}
+
+	ul {
+		width: 100%;
+		padding: 0;
+	}
+
+	li {
+		border-top: black 1px solid;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+
+	li:nth-child(2) {
+		border-bottom: black 1px solid;
+	}
+
+	li p:nth-child(1) {
+		flex-grow: 1;
+	}
+
+	li p:nth-child(2) {
+		align-self: flex-end;
+	}
+
+	a {
+		color: var(--text-color);
+		text-decoration: none;
+	}
+</style>

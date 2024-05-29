@@ -1,16 +1,21 @@
+---
+import Dropdown from "../iterable/Dropdown.astro";
+---
+
 <nav>
-    <a href="#">Inicio</a>
-    <a href="#">Proyectos</a>
-    <a href="#">Conocenos</a>
-    <a href="#">Trabajos</a>
-    <a href="#">Contacto</a>
+    <a href="/">Inicio</a>
+    <!--a href="/proyectos">Proyectos</a-->
+    <a href="/conocenos">Conócenos</a>
+    <Dropdown title="Participa" items={[{link:"/participa/actor", name:"Actor"}, {link:"/participa/otros", name:"Otros"}]}/>
+    <a href="/contactanos">Contáctanos</a>
 </nav>
 
 <style>
 	a {
-		margin: 2px 2%;
+		margin: auto 2%;
 		color: black;
 		text-decoration: none;
+		vertical-align: middle;
 	}
 
 	a:hover {
@@ -19,14 +24,14 @@
 	}
 
 	nav {
-        padding: 8px 10px;
+        padding: 14px 10px;
 		width: 100%;
 		display: flex;
+		top: 0;
 		position: fixed;
-		background-color: #fff;
+		background-color: transparent;
 		justify-content: center;
 		animation: nav 1s ease-out;
-		backdrop-filter: blur(10px);
 		box-shadow: 0px 5px 10px 0px rgba(0,0,0,0);
 
         /* Pause the animation */
@@ -42,23 +47,11 @@
 		to {
 			width: 30%;
 			margin: 8px 35%;
+			padding: 8px 10px;
 			border-radius: 8px;
 			background-color: #ffffffba;
 			box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.2);
+			backdrop-filter: blur(10px);
 		}
 	}
 </style>
-
-<script>
-    const height = document.body.offsetHeight - window.innerHeight;
-
-	window.addEventListener('scroll', () => {
-        let scroll = document.documentElement.scrollTop;
-
-        console.log(scroll);
-
-		document.body.style.setProperty(
-			'--scroll', 
-			(scroll / (height > 150 ? 150:height)).toString());
-	}, false);
-</script>
