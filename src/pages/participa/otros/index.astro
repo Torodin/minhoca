@@ -5,7 +5,8 @@ import Layout from '../../../layouts/Layout.astro';
 <Layout title="Unete">
 	<main>
 		<h2>Unete...</h2>
-		<form name="Otros" method="post" data-netlify="true">
+		<form name="otros" method="post" data-netlify="true">
+			<input type="hidden" name="form-name" value="actor" />
 			<section class="line-inputs">
 				<label for="name">Nombre*</label>
 				<input type="text" id="name" name="name" required>
