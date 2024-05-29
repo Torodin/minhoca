@@ -1,45 +1,11 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
-
-if(Astro.request.method === 'POST') {
-	const formData = await Astro.request.formData();
-	const name = formData.get('name');
-	const email = formData.get('email');
-	const phone = formData.get('phone');
-	const message = formData.get('message');
-
-	try {
-		await fetch(`${import.meta.env.URL}/.netlify/functions/emails/generalapli`,
-			{
-				headers: {
-					"netlify-emails-secret": import.meta.env.NETLIFY_EMAILS_SECRET,
-				},
-				method: "POST",
-				body: JSON.stringify({
-					from: "diegogomezledo@gmail.com",
-					to: "diegogomezledo@gmail.com",
-					subject: "Aplicacion general de " + name,
-					parameters: {
-						name: name, 
-						email: email, 
-						phone: phone, 
-						message: message
-					},
-				}),
-			}
-		);
-
-		alert("Gracias por tu aplicación, te responderemos lo antes posible.");
-	} catch (error) {
-		console.error(error);
-	}
-}
 ---
 
 <Layout title="Unete">
 	<main>
 		<h2>Unete...</h2>
-		<form method="post">
+		<form name="Otros" method="post" data-netlify="true">
 			<section class="line-inputs">
 				<label for="name">Nombre*</label>
 				<input type="text" id="name" name="name" required>
